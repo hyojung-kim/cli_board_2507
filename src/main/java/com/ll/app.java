@@ -20,7 +20,7 @@ public class app {
 
     public void run() {
         System.out.println("==게시판 앱==");
-        int aclIdx = 1;
+        int aclIdx = 0;
 
         while (true) {
             try {
@@ -32,6 +32,7 @@ public class app {
                 }
                 else if(inStr.equals("등록") ){
                     Article article = new Article();
+                    aclIdx++;
                     article.setId(aclIdx);
                     System.out.print("제목 등록해주세요: ");
                     article.setSubject(sc.nextLine().trim());
@@ -39,20 +40,32 @@ public class app {
                     article.setContent(sc.nextLine().trim());
                     aclList.add(article);
                     System.out.println(aclIdx + "번 게시물 등록되었습니다");
-                    aclIdx++;
+
                 }
                 else if(inStr.equals("목록") ){
                     System.out.println("번호/제목/내용");
                     System.out.println("------------");
-                    for(Article acl : aclList){
-                        System.out.printf("%d / %s / %s\n", acl.getId(), acl.getSubject(), acl.getContent());
+//                    for(Article acl : aclList){
+//                        System.out.printf("%d / %s / %s\n", acl.getId(), acl.getSubject(), acl.getContent());
+//                    }
+                    for (int i = aclList.size() - 1; i >= 0; i--) {
+                        Article article = aclList.get(i);
+                        System.out.printf("%d / %s / %s\n", article.getId(), article.getSubject(), article.getContent());
                     }
+                }
+                else if(inStr.startsWith("삭제") ){
+                    System.out.println("삭제?id= 형식 :");
 
-
-
-
-
-
+                    String[] commandList = inStr.split("\\?", 2);
+                    String[] paramsStr = commandList[1].split("=", 2);
+                    String value =  paramsStr[1];
+                    int idx = Integer.parseInt(value);
+                    for (int i = 0; i < aclList.size(); i++) {
+                        if (aclList.get(i).getId() == idx) { //i번째 article객체의 getId값 비교
+                            aclList.remove(i); //인덱스로 삭제하기
+                        }
+                    }
+                    System.out.printf("%d번 게시물이 삭제되었습니다\n", aclIdx);
                 }
 
             }
@@ -61,7 +74,7 @@ public class app {
                 sc.nextLine(); // 버퍼 비우기
             }
         }
-        //System.out.println("등록된 문자열은 : " + sb.toString() );
+
 
         sc.close();
 
