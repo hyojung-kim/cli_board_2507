@@ -1,6 +1,3 @@
-package com.ll;
-
-
 import java.util.Scanner;
 
 
