@@ -60,13 +60,7 @@ public class app {
                     String value = paramsStr[1];
                     int idx = Integer.parseInt(value);
 
-                    Article article = null;
-
-                    for (Article item : aclList) {
-                        if (item.getId() == idx) {
-                            article = item;
-                        }
-                    }
+                    Article article = _getFindById(idx);
                     if (article == null) {
                         System.out.printf("%d번 게시물은 존재하지 않습니다.\n", idx);
                     } else {
@@ -84,7 +78,21 @@ public class app {
 
                     }
                 }
+                else if (inStr.startsWith("삭제")) {
+                    String[] commandList = inStr.split("\\?", 2);
+                    String[] paramsStr = commandList[1].split("=", 2);
 
+                    String value = paramsStr[1];
+                    int idx = Integer.parseInt(value);
+                    Article article = _getFindById(idx);
+                    if (article == null) {
+                        System.out.printf("%d번 게시물은 존재하지 않습니다.\n", idx);
+                    }
+                    else {
+                        aclList.remove(article);
+                        System.out.printf("%d번 게시물이 삭제되었습니다.\n", idx);
+                    }
+                }
             }
             catch (InputMismatchException e) {
                 System.out.println("오류");
@@ -95,6 +103,15 @@ public class app {
 
         sc.close();
 
+    }
+
+    private Article _getFindById(int idx) {
+        for (Article item : aclList) {
+            if (item.getId() == idx) {
+                return item;
+            }
+        }
+        return null;
     }
 
 }
