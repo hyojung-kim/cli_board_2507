@@ -60,12 +60,21 @@ public class app {
                     String[] paramsStr = commandList[1].split("=", 2);
                     String value =  paramsStr[1];
                     int idx = Integer.parseInt(value);
+                    Article article = null;
                     for (int i = 0; i < aclList.size(); i++) {
                         if (aclList.get(i).getId() == idx) { //i번째 article객체의 getId값 비교
-                            aclList.remove(i); //인덱스로 삭제하기
+//                            aclList.remove(i); //인덱스로 삭제하기
+                            article = aclList.get(i);
+                            break;
                         }
                     }
-                    System.out.printf("%d번 게시물이 삭제되었습니다\n", aclIdx);
+                    if (article == null) {
+                        System.out.printf("%d번 게시물은 존재하지 않습니다.\n", idx);
+                    }
+                    else {
+                        aclList.remove(article);
+                        System.out.printf("%d번 게시물이 삭제되었습니다.\n", idx);
+                    }
                 }
 
             }
