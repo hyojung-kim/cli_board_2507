@@ -1,4 +1,6 @@
-package article;
+package com.ll.article;
+
+import com.ll.Container;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,11 +8,11 @@ import java.util.Scanner;
 
 public class ArticleController {
     int aclIdx = 0;
-    Scanner sc;
+
     List<Article> aclList;
     String inStr;
-    public ArticleController(Scanner sc){
-        this.sc = sc;
+    public ArticleController(){
+
         aclList = new ArrayList<>();
         inStr = "";
     }
@@ -20,9 +22,9 @@ public class ArticleController {
         aclIdx++;
         article.setId(aclIdx);
         System.out.print("제목 등록해주세요: ");
-        article.setSubject(sc.nextLine().trim());
+        article.setSubject(Container.getSc().nextLine().trim());
         System.out.print("내용 등록해주세요: ");
-        article.setContent(sc.nextLine().trim());
+        article.setContent(Container.getSc().nextLine().trim());
         aclList.add(article);
         System.out.println(aclIdx + "번 게시물 등록되었습니다");
     }
@@ -39,7 +41,7 @@ public class ArticleController {
         }
     }
 
-    public void modify() {
+    public void modify(String inStr) {
         String[] commandList = inStr.split("\\?", 2);
         String[] paramsStr = commandList[1].split("=", 2);
 
@@ -52,12 +54,12 @@ public class ArticleController {
         } else {
             System.out.printf("제목(기존) : %s\n", article.getSubject());
             System.out.print("제목(수정) : ");
-            String modifySubject = sc.nextLine();
+            String modifySubject = Container.getSc().nextLine();
             article.setSubject(modifySubject);
 
             System.out.printf("내용(기존) : %s\n", article.getContent());
             System.out.print("내용(수정) : ");
-            String modifyContent = sc.nextLine();
+            String modifyContent = Container.getSc().nextLine();
             article.setContent(modifyContent);
 
             System.out.printf("%d번 게시물이 수정되었습니다.\n", idx);
@@ -65,7 +67,7 @@ public class ArticleController {
         }
     }
 
-    public void delete() {
+    public void delete(String inStr) {
         String[] commandList = inStr.split("\\?", 2);
         String[] paramsStr = commandList[1].split("=", 2);
 

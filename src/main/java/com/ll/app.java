@@ -1,17 +1,16 @@
+package com.ll;
 
-import article.ArticleController;
-import system.SystemController;
+import com.ll.article.ArticleController;
+import com.ll.system.SystemController;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class app {
-    Scanner sc;
     ArticleController articleCnt;
     SystemController sysCnt;
 
-    app(Scanner sc) {
-        this.sc = sc;
-        articleCnt = new ArticleController(sc);
+    app() {
+        articleCnt = new ArticleController();
         sysCnt = new SystemController();
     }
 
@@ -23,7 +22,7 @@ public class app {
             try {
                 String inStr;
                 System.out.println("명령을 입력!)");
-                inStr = sc.nextLine().trim();
+                inStr = Container.getSc().nextLine().trim();
 
                 if(inStr.equals("종료")){
                     sysCnt.exit();
@@ -37,20 +36,20 @@ public class app {
                     articleCnt.list();
                 }
                 else if(inStr.startsWith("수정") ) {
-                    articleCnt.modify();
+                    articleCnt.modify(inStr);
                 }
                 else if (inStr.startsWith("삭제")) {
-                    articleCnt.delete();
+                    articleCnt.delete(inStr);
                 }
             }
             catch (InputMismatchException e) {
                 System.out.println("오류");
-                sc.nextLine(); // 버퍼 비우기
+                Container.getSc().nextLine(); // 버퍼 비우기
             }
         }
 
 
-        sc.close();
+        Container.getSc().close();
 
     }
 
