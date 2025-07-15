@@ -23,23 +23,23 @@ public class app {
                 String inStr;
                 System.out.println("명령을 입력!)");
                 inStr = Container.getSc().nextLine().trim();
-
+                Request request = new Request(inStr);
                 if(inStr.equals("종료")){
                     sysCnt.exit();
                     break;
                 }
-                else if(inStr.equals("등록") ){
+                else if(request.getActionCode().equals("등록") ){
                     articleCnt.write();
 
                 }
-                else if(inStr.equals("목록") ){
+                else if(request.getActionCode().equals("목록") ){
                     articleCnt.list();
                 }
-                else if(inStr.startsWith("수정") ) {
-                    articleCnt.modify(inStr);
+                else if(request.getActionCode().startsWith("수정") ) {
+                    articleCnt.modify(request.getIdx());
                 }
-                else if (inStr.startsWith("삭제")) {
-                    articleCnt.delete(inStr);
+                else if (request.getActionCode().startsWith("삭제")) {
+                    articleCnt.delete(request.getIdx());
                 }
             }
             catch (InputMismatchException e) {

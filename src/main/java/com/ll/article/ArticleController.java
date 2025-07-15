@@ -1,6 +1,7 @@
 package com.ll.article;
 
 import com.ll.Container;
+import com.ll.Request;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +42,9 @@ public class ArticleController {
         }
     }
 
-    public void modify(String inStr) {
-        String[] commandList = inStr.split("\\?", 2);
-        String[] paramsStr = commandList[1].split("=", 2);
+    public void modify(int idx) {
 
-        String value = paramsStr[1];
-        int idx = Integer.parseInt(value);
+
 
         Article article = _getFindById(idx);
         if (article == null) {
@@ -67,12 +65,8 @@ public class ArticleController {
         }
     }
 
-    public void delete(String inStr) {
-        String[] commandList = inStr.split("\\?", 2);
-        String[] paramsStr = commandList[1].split("=", 2);
+    public void delete(int idx) {
 
-        String value = paramsStr[1];
-        int idx = Integer.parseInt(value);
         Article article = _getFindById(idx);
         if (article == null) {
             System.out.printf("%d번 게시물은 존재하지 않습니다.\n", idx);
