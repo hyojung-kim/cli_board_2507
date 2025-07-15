@@ -20,11 +20,9 @@ public class app {
 
         while (true) {
             try {
-                String inStr;
                 System.out.println("명령을 입력!)");
-                inStr = Container.getSc().nextLine().trim();
-                Request request = new Request(inStr);
-                if(inStr.equals("종료")){
+                Request request = new Request(Container.getSc().nextLine().trim());
+                if(request.getActionCode().equals("종료")){
                     sysCnt.exit();
                     break;
                 }
@@ -36,10 +34,10 @@ public class app {
                     articleCnt.list();
                 }
                 else if(request.getActionCode().startsWith("수정") ) {
-                    articleCnt.modify(request.getIdx());
+                    articleCnt.modify(request);
                 }
                 else if (request.getActionCode().startsWith("삭제")) {
-                    articleCnt.delete(request.getIdx());
+                    articleCnt.delete(request);
                 }
             }
             catch (InputMismatchException e) {

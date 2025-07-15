@@ -11,11 +11,11 @@ public class ArticleController {
     int aclIdx = 0;
 
     List<Article> aclList;
-    String inStr;
+
     public ArticleController(){
 
         aclList = new ArrayList<>();
-        inStr = "";
+
     }
 
     public void write() {
@@ -33,22 +33,19 @@ public class ArticleController {
     public void list() {
         System.out.println("번호/제목/내용");
         System.out.println("------------");
-//                    for(Article acl : aclList){
-//                        System.out.printf("%d / %s / %s\n", acl.getId(), acl.getSubject(), acl.getContent());
-//                    }
         for (int i = aclList.size() - 1; i >= 0; i--) {
             Article article = aclList.get(i);
             System.out.printf("%d / %s / %s\n", article.getId(), article.getSubject(), article.getContent());
         }
     }
 
-    public void modify(int idx) {
+    public void modify(Request request) {
+        int id = _getIntParam(request.getParam("id"));
 
+        Article article = _getAclFindById(id);
 
-
-        Article article = _getFindById(idx);
         if (article == null) {
-            System.out.printf("%d번 게시물은 존재하지 않습니다.\n", idx);
+            System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
         } else {
             System.out.printf("제목(기존) : %s\n", article.getSubject());
             System.out.print("제목(수정) : ");
@@ -60,29 +57,40 @@ public class ArticleController {
             String modifyContent = Container.getSc().nextLine();
             article.setContent(modifyContent);
 
-            System.out.printf("%d번 게시물이 수정되었습니다.\n", idx);
+            System.out.printf("%d번 게시물이 수정되었습니다.\n", id);
 
         }
     }
 
-    public void delete(int idx) {
+    public void delete(Request request) {
+        int id = _getIntParam(request.getParam("id"));
 
-        Article article = _getFindById(idx);
+        Article article = _getAclFindById(id);
         if (article == null) {
-            System.out.printf("%d번 게시물은 존재하지 않습니다.\n", idx);
+            System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
         }
         else {
             aclList.remove(article);
-            System.out.printf("%d번 게시물이 삭제되었습니다.\n", idx);
+            System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
         }
     }
 
-    private Article _getFindById(int idx) {
+    private Article _getAclFindById(int idx) {
         for (Article item : aclList) {
             if (item.getId() == idx) {
                 return item;
             }
         }
         return null;
+    }
+
+    private int _getIntParam(String id) {
+        int defaultValue = -1;
+
+        try {
+            return Integer.parseInt(id);
+        } catch(NumberFormatException e) {
+            return defaultValue;
+        }
     }
 }
