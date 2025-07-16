@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Request {
-    private String actionCode;
-    private Map<String, String> params =  new HashMap<>();
+    private final String actionCode;
+    private final Map<String, String> params =  new HashMap<>();
 
     public Request(String command) {
         String[] commandList = command.split("\\?", 2);//수정?id=2&title=제목1&content=가나다

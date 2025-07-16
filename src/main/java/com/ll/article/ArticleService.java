@@ -1,40 +1,32 @@
 package com.ll.article;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleService {
     int lastId = 1;
-    List<Article> articleList = new ArrayList<>();
+
+    ArticleRepository articleRepository;
+    public ArticleService() {
+        articleRepository = new ArticleRepository();
+    }
 
     public int create(String subject, String content) {
-        Article article  = new Article(lastId, subject, content);
-        articleList.add(article);
-
-        lastId++;
-
-        return article.getId();
+        return articleRepository.create(subject, content);
     }
 
     public Article getFindById(int id) {
-        for ( Article item : articleList ) {
-            if ( item.getId() == id ) {
-                return item;
-            }
-        }
-        return null;
+        return articleRepository.FindById(id);
     }
 
-    public void remove(Article article) {
-        articleList.remove(article);
+    public int remove(Article article) {
+        return articleRepository.remove(article);
     }
 
     public void modify(Article article, String modifySubject, String modifyContent) {
-        article.setSubject(modifySubject);
-        article.setContent(modifyContent);
+        articleRepository.modify(article, modifySubject, modifyContent);
     }
 
     public List<Article> findAll() {
-        return articleList;
+        return articleRepository.findAll();
     }
 }
