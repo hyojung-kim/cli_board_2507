@@ -38,14 +38,14 @@ public class ArticleRepository {
         return null;
     }
 
-    public int remove(Article article) {
-        List<Article> articleList = new ArrayList<>();
+    public void remove(Article article) {
         String sql = String.format("DELETE FROM article  WHERE id = %d", article.getId());
-        return Container.getDBConnection().delete(sql);
+        Container.getDBConnection().delete(sql);
     }
 
     public void modify(Article article, String modifySubject, String modifyContent) {
-        article.setSubject(modifySubject);
-        article.setContent(modifyContent);
+        String sql = String.format("UPDATE article SET subject ='%s', content = '%s' WHERE id = %d", modifySubject, modifyContent, article.getId());
+        Container.getDBConnection().update(sql);
+
     }
 }

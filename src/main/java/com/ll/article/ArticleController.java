@@ -43,7 +43,7 @@ public class ArticleController {
     public void modify(Request request) {
         int id = _getIntParam(request.getParam("id"));
 
-        Article article = articleService.getFindById(id);
+        Article article = articleService.FindById(id);
 
         if (article == null) {
             System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -66,7 +66,7 @@ public class ArticleController {
     public void delete(Request request) {
         int id = _getIntParam(request.getParam("id"));
 
-        Article article = articleService.getFindById(id);
+        Article article = articleService.FindById(id);
         if (article == null) {
             System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
         }

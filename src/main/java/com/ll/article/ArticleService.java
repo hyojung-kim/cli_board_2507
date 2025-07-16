@@ -3,7 +3,7 @@ package com.ll.article;
 import java.util.List;
 
 public class ArticleService {
-    int lastId = 1;
+
 
     ArticleRepository articleRepository;
     public ArticleService() {
@@ -14,12 +14,12 @@ public class ArticleService {
         return articleRepository.create(subject, content);
     }
 
-    public Article getFindById(int id) {
+    public Article FindById(int id) {
         return articleRepository.FindById(id);
     }
 
-    public int remove(Article article) {
-        return articleRepository.remove(article);
+    public void remove(Article article) {
+         articleRepository.remove(article);
     }
 
     public void modify(Article article, String modifySubject, String modifyContent) {
